@@ -1,0 +1,6 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+.huaban.com	TRUE	/	FALSE	1473354241	sid	bTvWX1ipM6yx5qbeAFVgpToYtDM.hvEMwFSHDQEP40mTeNB%2FmQ1BpQQtLVHgTaEX76fbljk
+.huaban.com	TRUE	/	FALSE		uid	7014435
