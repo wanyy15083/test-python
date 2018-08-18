@@ -2,10 +2,10 @@
 
 __author__ = 'SYG'
 
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 import re
-import thread
+import _thread
 import time
 
 # page = 1
@@ -43,19 +43,19 @@ class QSBK:
     def getPage(self,pageIndex):
         try:
             url = 'http://www.qiushibaike.com/hot/page/' + str(pageIndex)
-            request = urllib2.Request(url,headers=self.headers)
-            response = urllib2.urlopen(request)
+            request = urllib.request.Request(url,headers=self.headers)
+            response = urllib.request.urlopen(request)
             pageCode = response.read().decode('utf-8')
             return pageCode
-        except urllib2.URLError,e:
+        except urllib.error.URLError as e:
             if hasattr(e,'reason'):
-                print u"连接糗事百科失败，失败原因",e.reason
+                print("连接糗事百科失败，失败原因",e.reason)
                 return None
 
     def getPageItems(self,pageIndex):
         pageCode = self.getPage(pageIndex)
         if not pageCode:
-            print "页面加载失败..."
+            print("页面加载失败...")
             return None
         pattern = re.compile('<div.*?clearfix">.*?<h2>(.*?)</h2>.*?<div.*?content">(.*?)</div>(.*?)<div.*?stats">.*?number">(.*?)</i>',re.S)
         items = re.findall(pattern,pageCode)
@@ -77,15 +77,15 @@ class QSBK:
 
     def getOneStory(self,pageStories,page):
         for story in pageStories:
-            input = raw_input()
+            input = input()
             self.loadPage()
             if input == 'Q':
                 self.enable = False
                 return
-            print u'第%d页\t发布人：%s\t赞：%s\n%s' %(page,story[0],story[2],story[1])
+            print('第%d页\t发布人：%s\t赞：%s\n%s' %(page,story[0],story[2],story[1]))
 
     def start(self):
-        print u'正在读取糗事百科，按回车查看新段子，Q退出'
+        print('正在读取糗事百科，按回车查看新段子，Q退出')
         self.enable = True
         self.loadPage()
         nowPage = 0

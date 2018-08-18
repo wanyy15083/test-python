@@ -3,15 +3,15 @@ import gevent.monkey
 gevent.monkey.patch_socket()
 
 import gevent
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import time
 
 
 def fetch(pid):
-    response = urllib2.urlopen('http://aljun.me')
+    response = urllib.request.urlopen('http://aljun.me')
     result = response.read()
 
-    print 'Process %s : %s' % (pid,time.time())
+    print('Process %s : %s' % (pid,time.time()))
 
 
 def synchronous():
@@ -26,8 +26,8 @@ def asychronous():
     gevent.joinall(threads)
 
 
-print 'Synchronous:'
+print('Synchronous:')
 synchronous()
 
-print 'Asynchronous:'
+print('Asynchronous:')
 asychronous()

@@ -16,4 +16,4 @@ assert "Python" in driver.title
 elem = driver.find_element_by_name("q")
 elem.send_keys("pycon")
 elem.send_keys(Keys.RETURN)
-print driver.page_source
+print(driver.page_source)

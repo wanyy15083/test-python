@@ -34,6 +34,6 @@ dir = os.getcwd()
 def get_dom(url):
     cmd = 'cmd.exe /k phantomjs.exe huaban.js "%s"' % url
     a = os.system(cmd)
-    print a
+    print(a)
 
 get_dom('http://huaban.com/w1dvcnopmu/following/')

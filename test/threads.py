@@ -1,10 +1,10 @@
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import time
-import Queue
+import queue
 import threading
 
-hosts = ["http://baidu.com", "http://jianshu.com", "http://taobao.com"]
-queue = Queue.Queue()
+hosts = ["https://baidu.com", "https://jd.com", "https://taobao.com"]
+queue = queue.Queue()
 
 
 class ThreadUrl(threading.Thread):
@@ -15,9 +15,9 @@ class ThreadUrl(threading.Thread):
     def run(self):
         while True:
             host = self.queue.get()
-            url = urllib2.urlopen(host)
-            print url.geturl()
-            print self.getName()
+            url = urllib.request.urlopen(host)
+            print(url.geturl())
+            print(self.getName())
 
             self.queue.task_done()
 
@@ -39,4 +39,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-print "it use time:%s" % (time.time() - start)
+print("it use time:%s" % (time.time() - start))

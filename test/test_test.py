@@ -2,7 +2,8 @@
 
 
 import sys
-reload(sys)
+import imp
+imp.reload(sys)
 sys.setdefaultencoding("utf-8")
 import gevent.monkey
 gevent.monkey.patch_socket()
@@ -12,9 +13,9 @@ import gevent
 from gevent.pool import Pool
 from multiprocessing.dummy import Pool
 import requests
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
-the_list=range(6)
+the_list=list(range(6))
 
 def create_misson(url):
     n=h(url)
@@ -27,7 +28,7 @@ class h():
         try:
             requests.get(self.n)
         except requests.exceptions.ConnectionError as e:
-            print "died:%s\n" % self.n
+            print("died:%s\n" % self.n)
             return
 
 gevent_pool=Pool(20)
@@ -51,22 +52,22 @@ start=time.time()
 pool.map_async(create_misson,url_list)
 pool.close()
 pool.join()
-print "muiltiprocessing used ",str(time.time()-start)
+print("muiltiprocessing used ",str(time.time()-start))
 
 start=time.time()
 jobs=[]
 for url in url_list:
     jobs.append(gevent.spawn(create_misson,url))
 gevent.joinall(jobs)
-print "use gevent used ",time.time()-start
+print("use gevent used ",time.time()-start)
 
 start=time.time()
 gevent_pool.map(create_misson,url_list)
 
 #pool.join()
-print "use gevent_pool used ",str(time.time()-start)
+print("use gevent_pool used ",str(time.time()-start))
 
 start=time.time()
 for url in url_list:
     create_misson(url)
-print "use nothing ,it cost:",str(time.time()-start)
+print("use nothing ,it cost:",str(time.time()-start))

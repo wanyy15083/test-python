@@ -1,17 +1,16 @@
 # -*- coding:utf-8 -*-
 
 import sys
-reload(sys)
 sys.setdefaultencoding("utf-8")
 
 import redis
-import getHuabanUsers
+from test.getHuabanUsers import Huaban_Crawler
 import time
 from multiprocessing.dummy import Pool
-from redisQueue import red,red_queue
+from test.redisQueue import red,red_queue
 
 def create_new_slave(url,option):
-    new_slave = getHuabanUsers.Huaban_Crawler(url)
+    new_slave = Huaban_Crawler(url)
     new_slave.send_request()
     return "ok"
 
@@ -40,4 +39,4 @@ if __name__=="__main__":
     threading_pool.close()
     threading_pool.join()
 
-    print "crawler has crawled %d people ,it cost %s" %(count,time.time()-start)
+    print("crawler has crawled %d people ,it cost %s" %(count,time.time()-start))

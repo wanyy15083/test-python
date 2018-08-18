@@ -1,4 +1,4 @@
-import urllib2, urllib
+import urllib.request, urllib.error, urllib.parse, urllib.request, urllib.parse, urllib.error
 
 # request = urllib2.Request("http://www.baidu.com")
 # response = urllib2.urlopen(request)
@@ -72,7 +72,7 @@ import urllib2, urllib
 # else:
 #     print 'OK'
 
-import cookielib
+import http.cookiejar
 
 # cookie = cookielib.CookieJar()
 # handler = urllib2.HTTPCookieProcessor(cookie)
@@ -97,18 +97,18 @@ import cookielib
 # print response.read()
 
 filename = 'cookie.txt'
-cookie = cookielib.MozillaCookieJar(filename)
-opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))
-postdata = urllib.urlencode({'email': '1508355923@qq.com', 'password': '8188SYG175','_ref':'frame'})
+cookie = http.cookiejar.MozillaCookieJar(filename)
+opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cookie))
+postdata = urllib.parse.urlencode({'email': '1508355923@qq.com', 'password': '8188SYG175','_ref':'frame'})
 loginUrl = 'https://huaban.com/auth/'
 user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'
 headers = {'User-Agent':user_agent,'Referer':'http://huaban.com/','Origin':'http://huaban.com'}
-request = urllib2.Request(loginUrl,postdata,headers)
+request = urllib.request.Request(loginUrl,postdata,headers)
 result = opener.open(request)
 cookie.save(ignore_discard=True, ignore_expires=True)
 gradeUrl = 'http://huaban.com/pins/814174415/'
 result = opener.open(gradeUrl)
-print result.read()
+print(result.read())
 
 
 

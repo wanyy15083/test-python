@@ -2,8 +2,8 @@
 
 __author__ = 'SYG'
 
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 import re
 import os
 
@@ -37,9 +37,9 @@ class Spider:
 
     def getPage(self, pageIndex):
         url = self.siteURL + '?page=' + str(pageIndex)
-        print url
-        request = urllib2.Request(url)
-        response = urllib2.urlopen(request)
+        print(url)
+        request = urllib.request.Request(url)
+        response = urllib.request.urlopen(request)
         return response.read().decode('gbk')
 
     def getContents(self, pageIndex):
@@ -54,7 +54,7 @@ class Spider:
         return contents
 
     def getDetailPage(self, infoURL):
-        response = urllib2.urlopen(infoURL)
+        response = urllib.request.urlopen(infoURL)
         return response.read().decode('gbk')
 
     def getBrief(self, page):
@@ -71,7 +71,7 @@ class Spider:
 
     def saveImgs(self,images,name):
         number = 1
-        print u'发现',name,u'共有',len(images),u'张照片'
+        print('发现',name,'共有',len(images),'张照片')
         for imageURL in images:
             splitPath = imageURL.split('.')
             fTail = splitPath.pop()
@@ -89,17 +89,17 @@ class Spider:
 
 
     def saveImg(self, imageURL, fileName):
-        u = urllib.urlopen(imageURL)
+        u = urllib.request.urlopen(imageURL)
         data = u.read()
         f = open(fileName, 'wb')
         f.write(data)
-        print u'正在报错她的图片：',fileName
+        print('正在报错她的图片：',fileName)
         f.close()
 
     def saveBrief(self, content, name):
         fileName = name + '/' + name + '.txt'
         f = open(fileName, 'w+')
-        print u'正在偷偷保存她的个人信息为', fileName
+        print('正在偷偷保存她的个人信息为', fileName)
         f.write(content.encode('uft-8'))
 
     def mkdir(self, path):
@@ -109,15 +109,15 @@ class Spider:
             os.makedirs(path)
             return True
         else:
-            print u'文件夹',path,u'已创建成功'
+            print('文件夹',path,'已创建成功')
             return False
 
     def savePageInfo(self,pageIndex):
         contents = self.getContents(pageIndex)
         for item in contents:
-            print u'发现一位模特，名字叫',item[2],u'芳龄',item[3],u'她在',item[4]
-            print u'正在保存',item[2],u'的信息'
-            print u'又意外发现她的个人地址',item[0]
+            print('发现一位模特，名字叫',item[2],'芳龄',item[3],'她在',item[4])
+            print('正在保存',item[2],'的信息')
+            print('又意外发现她的个人地址',item[0])
             detailURL = item[0]
             detailPage = self.getDetailPage(detailURL)
             brief = self.getBrief(detailPage)
@@ -128,7 +128,7 @@ class Spider:
             self.saveImgs(images,item[2])
     def savePagesInfo(self,start,end):
         for i in range(start,end+1):
-            print u'正在偷偷寻找第',i,u'个地方，看看MM们在不在'
+            print('正在偷偷寻找第',i,'个地方，看看MM们在不在')
             self.savePageInfo(i)
 
 spider = Spider()

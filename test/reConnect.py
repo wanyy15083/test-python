@@ -2,8 +2,8 @@
 
 __author__ = 'SYG'
 
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 import socket
 import types
 import time
@@ -21,7 +21,7 @@ class Login:
         self.every = 10
 
     def login(self):
-        print self.getCurrentTime(), u'正在尝试连接无线网络'
+        print((self.getCurrentTime(), '正在尝试连接无线网络'))
         ip = self.getIP()
         data = {
             "username": self.username,
@@ -64,27 +64,27 @@ class Login:
             'Origin': 'http://192.168.8.10',
             'Referer': 'http://192.168.8.10/portal/index_default.jsp?Language=Chinese'
         }
-        post_data = urllib.urlencode(data)
+        post_data = urllib.parse.urlencode(data)
         login_url = 'http://192.168.8.10/portal/login.jsp?Flag=0'
-        request = urllib2.Request(login_url, post_data, headers)
-        response = urllib2.urlopen(request)
+        request = urllib.request.Request(login_url, post_data, headers)
+        response = urllib.request.urlopen(request)
         result = response.read.decode('gbk')
         self.getLoginResult(result)
 
     def getLoginResult(self, result):
-        if u'用户上线成功' in result:
-            print self.getCurrentTime(), u"用户上线成功,在线时长为", self.overtime / 60, "分钟"
-        elif u'您已经建立了连接' in result:
-            print self.getCurrentTime(), u"您已经建立了连接,无需重复登陆"
-        elif u"用户不存在" in result:
-            print self.getCurrentTime(), u"用户不存在，请检查学号是否正确"
-        elif u"用户密码错误" in result:
+        if '用户上线成功' in result:
+            print((self.getCurrentTime(), "用户上线成功,在线时长为", self.overtime / 60, "分钟"))
+        elif '您已经建立了连接' in result:
+            print((self.getCurrentTime(), "您已经建立了连接,无需重复登陆"))
+        elif "用户不存在" in result:
+            print((self.getCurrentTime(), "用户不存在，请检查学号是否正确"))
+        elif "用户密码错误" in result:
             pattern = re.compile('<td class="tWhite">.*?2553:(.*?)</b>.*?</td>', re.S)
             res = re.search(pattern, result)
             if res:
-                print self.getCurrentTime(), res.group(1), u'请重新修改密码'
+                print((self.getCurrentTime(), res.group(1), '请重新修改密码'))
         else:
-            print self.getCurrentTime(), u'未知错误，请检查学号密码是否正确'
+            print((self.getCurrentTime(), '未知错误，请检查学号密码是否正确'))
 
     def getNowTime(self):
         return str(int(time.time())) + '000'
@@ -99,7 +99,7 @@ class Login:
                 for i in ip_list:
                     if self.ip_pre in str():
                         return str(i)
-            elif type(ip_list) is types.StringType:
+            elif type(ip_list) is bytes:
                 if self.ip_pre in ip_list:
                     return ip_list
 
@@ -116,25 +116,25 @@ class Login:
         return time.strftime('[%Y-%m-%d %H:%M:%S]', time.localtime(time.time()))
 
     def main(self):
-        print self.getCurrentTime(), u"您好，欢迎使用模拟登陆系统"
+        print((self.getCurrentTime(), "您好，欢迎使用模拟登陆系统"))
         while True:
             nowIP = self.getIP()
             if not nowIP:
-                print self.getCurrentTime(), u"请检查是否正常连接QLSC_STU无线网络"
+                print((self.getCurrentTime(), "请检查是否正常连接QLSC_STU无线网络"))
             else:
-                print self.getCurrentTime(), u"成功连接了QLSC_STU网络,本机IP为", nowIP
+                print((self.getCurrentTime(), "成功连接了QLSC_STU网络,本机IP为", nowIP))
                 self.login()
                 while True:
                     can_connect = self.canConnect()
                     if not can_connect:
                         nowIP = self.getIP()
                         if not nowIP:
-                            print self.getCurrentTime(), u"当前已经掉线，请确保连接上了QLSC_STU网络"
+                            print((self.getCurrentTime(), "当前已经掉线，请确保连接上了QLSC_STU网络"))
                         else:
-                            print self.getCurrentTime(), u"当前已经掉线，正在尝试重新连接"
+                            print((self.getCurrentTime(), "当前已经掉线，正在尝试重新连接"))
                             self.login()
                     else:
-                        print self.getCurrentTime(), u"当前网络连接正常"
+                        print((self.getCurrentTime(), "当前网络连接正常"))
                     time.sleep(self.every)
                 time.sleep(self.every)
 

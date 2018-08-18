@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 
 import sys
+import imp
 
-reload(sys)
+imp.reload(sys)
 sys.setdefaultencoding("utf-8")
 
 import gevent.monkey
@@ -14,7 +15,7 @@ import requests
 from lxml import etree
 import os
 import saveHuaBan
-from redisQueue import check_url, crawl_url
+from test.redisQueue import check_url, crawl_url
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -86,18 +87,18 @@ class Huaban_Crawler():
         url_list = tree.xpath("//a[@class='username']/@href")
         for target_url in url_list:
             check_url('http://huaban.com' + target_url)
-            print target_url
+            print(target_url)
 
     def print_data_out(self):
-        print "*" * 60
-        print u"URL:%s\n" % self.url
-        print u"用户：%s\n" % self.user_name
-        print u"粉丝：%s\n" % self.user_followers
-        print u"关注：%s\n" % self.user_follows
-        print u"画板：%s\n" % self.picture_num
-        print u"采集：%s\n" % self.catch_num
-        print u"喜欢：%s\n" % self.like_num
-        print "*" * 60
+        print("*" * 60)
+        print("URL:%s\n" % self.url)
+        print("用户：%s\n" % self.user_name)
+        print("粉丝：%s\n" % self.user_followers)
+        print("关注：%s\n" % self.user_follows)
+        print("画板：%s\n" % self.picture_num)
+        print("采集：%s\n" % self.catch_num)
+        print("喜欢：%s\n" % self.like_num)
+        print("*" * 60)
 
         my_dict = {
             'user_name': self.user_name,

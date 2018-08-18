@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 
 import sys
-reload(sys)
+import imp
+imp.reload(sys)
 sys.setdefaultencoding("utf-8")
 import gevent.monkey
 gevent.monkey.patch_all()
@@ -56,11 +57,11 @@ if __name__=="__main__":
     create_new_slave(url)
     for i in range(50):
         url=red.lpop(red_queue)
-        print url
+        print(url)
         create_new_slave(url)
 
     process_pool.map_async(process_worker)
     process_pool.close()
     process_pool.join()
 
-    print "crawler has crawled %d people ,it cost %s" %(count,time.time()-start)
+    print("crawler has crawled %d people ,it cost %s" %(count,time.time()-start))

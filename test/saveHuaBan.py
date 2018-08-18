@@ -18,12 +18,12 @@ class HuabanMysql():
         try:
             self.conn = pymysql.connect(**config)
             self.cursor = self.conn.cursor()
-        except pymysql.Error, e:
-            print 'fail to connect mysql:%s' % e.message
+        except pymysql.Error as e:
+            print('fail to connect mysql:%s' % e.message)
 
     def save_data(self, table, my_dict):
-        cols = ','.join(my_dict.keys())
-        values = '","'.join(my_dict.values())
+        cols = ','.join(list(my_dict.keys()))
+        values = '","'.join(list(my_dict.values()))
         sql = 'insert into %s (%s) values (%s)' % (table, cols, '"' + values + '"')
         try:
             self.cursor.execute(sql)

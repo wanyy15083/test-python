@@ -21,7 +21,7 @@ def checkGit(paths):
         files = os.listdir(path)
         if '.git' in files:
             os.chdir(path)
-            print os.getcwd()
+            print(os.getcwd())
             # result = os.popen('git pull')
             # print result
             os.system("git pull")
