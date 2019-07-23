@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .idea
 .classpath
 .project
@@ -35,4 +34,3 @@ tool/data-importer/*.out
 argfile*
 *.ipr
 *.iws
->>>>>>> tmp
