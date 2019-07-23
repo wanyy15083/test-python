@@ -17,6 +17,20 @@ def query(q, i):
     finally:
         mysql.dispose()
 
+def query_order(q, i):
+    mysql = MyPymysqlPool("harbor_prd")
+    try:
+        result = mysql.getAll("select loan_amount from record_loan where id >= %s and id < %s",
+                              [(i + 1) * 10, (i + 2) * 1000, ])
+        sum = 0
+        if result:
+            for ret in result:
+                sum += ret['loan_amount']
+        q.put(sum)
+        return sum
+    finally:
+        mysql.dispose()
+
 
 if __name__ == "__main__":
     start = time.time()
@@ -26,10 +40,11 @@ if __name__ == "__main__":
     pool = Pool(4)
     results = []
     for i in range(5):
-        results.append(pool.apply_async(query, (q, i)))
+        results.append(pool.apply_async(query_order, (q, i)))
 
     pool.close()
     pool.join()
+    print(q.get())
 
     for result in results:
         print(result.get())

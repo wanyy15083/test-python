@@ -14,11 +14,11 @@ gevent.monkey.patch_ssl()
 import requests
 from lxml import etree
 import os
-import saveHuaBan
+import test.saveHuaBan as saveHuaBan
 from test.redisQueue import check_url, crawl_url
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+# from requests.packages.urllib3.exceptions import InsecureRequestWarning
+#
+# requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 class Huaban_Crawler():
