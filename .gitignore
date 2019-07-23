@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .idea
 .classpath
 .project
@@ -13,3 +14,25 @@ generatorConfig.xml
 *.lock
 /build/
 *.settings
+=======
+target/
+*.swp
+*.classpath
+*.project
+*.epoch
+*.lck
+*.log
+.settings/
+*.pyc
+*.idea/
+*.iml
+classes/
+.gradle/
+build/
+gradle/
+out/
+tool/data-importer/*.out
+argfile*
+*.ipr
+*.iws
+>>>>>>> tmp
