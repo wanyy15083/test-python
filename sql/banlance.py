@@ -1,6 +1,6 @@
 import csv
 
-with open('额度.csv') as f:
+with open('sql/balance.csv') as f:
     file = csv.reader(f)
     # print(file)
     for balance in file:

@@ -2,7 +2,8 @@
 
 import os
 
-rootPath = 'D:\\Java\\Git\\'
+# rootPath = 'D:\\Java\\Git\\'
+rootPath = '/Users/songyigui/Project/'
 
 
 def eachPath(filePath):
@@ -18,12 +19,14 @@ def eachPath(filePath):
 
 def checkGit(paths):
     for path in paths:
-        files = os.listdir(path)
-        if '.git' in files:
-            os.chdir(path)
-            print(os.getcwd())
-            # result = os.popen('git pull')
-            # print result
-            os.system("git pull")
+        if os.path.isdir(path) and path != "/Users/songyigui/Project/avira-sdk":
+            print(path)
+            files = os.listdir(path)
+            if '.git' in files:
+                os.chdir(path)
+                print(os.getcwd())
+                # result = os.popen('git pull')
+                # print result
+                # os.system("git pull")
 
 checkGit(eachPath(rootPath))
